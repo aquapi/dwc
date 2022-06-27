@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+nav {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+}
+
+#root {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Lato', sans-serif;
+}
+
+canvas {
+    border: 1px solid rgba(34,36,38,.15);
+    border-radius: .28571429rem;
+    margin-bottom: 10px;
+}
+
+
