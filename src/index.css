@@ -23,4 +23,6 @@ canvas {
     margin-bottom: 10px;
 }
 
-
+body {
+    overflow: hidden;
+}

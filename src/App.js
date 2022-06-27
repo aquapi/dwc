@@ -13,24 +13,33 @@ function App() {
 
     // Some key events
     React.useEffect(() => {
-        const evListener = e => {
-            e.preventDefault();
+        // Code
+        if (window.location.search)
+            code.current = new URLSearchParams(window.location.search).get("code") ?? "";
 
+        /**
+         * @type {(this: Document, ev: KeyboardEvent) => any}
+         */
+        const evListener = e => {
             // Run
             if (e.key === "Enter")
                 document.querySelector("button").click();
 
             // Download the image
-            if (e.ctrlKey && e.key === "s") {
+            if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+                e.preventDefault();
+                e.stopPropagation();
+
                 const tempLink = document.createElement("a");
                 tempLink.download = "painting.png";
                 tempLink.href = panel.toDataURL();
                 tempLink.click();
             }
         };
-        document.addEventListener("keyup", evListener);
 
-        return () => document.removeEventListener("keyup", evListener);
+        document.addEventListener("keydown", evListener, false);
+
+        return () => document.removeEventListener("keydown", evListener, false);
     });
 
     // Run the code
@@ -68,6 +77,7 @@ function App() {
                     code.current = e.currentTarget.value}
                 fluid
                 style={{ width: "70vw", height: "5vh" }}
+                defaultValue={code.current}
             />
         </nav>
     </>;

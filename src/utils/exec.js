@@ -3,7 +3,7 @@
 /**
  * @param {string} str 
  */
-const splitStatement = (str) => {
+const splitStatement = str => {
     const paren = str.match(/\((.+?)\)/g);
     let index = 0;
     return str.replace(/\((.+?)\)/g, '(tmp)')
@@ -17,7 +17,7 @@ const splitStatement = (str) => {
                     index = paren.length;
             }
             return str;
-        })
+        });
 }
 
 /**
