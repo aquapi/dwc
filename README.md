@@ -36,5 +36,5 @@ Some code stuff.
 
 ## Code examples
 
-- [Draw a circle](https://dwc-six.vercel.app/?repeat%20360%20(move%201%20then%20rotate%201)): `repeat 360 (move 1 then rotate 1)`
-- [Draw a square](https://dwc-six.vercel.app/?repeat%204%20(move%2090%20then%20rotate%2090)): `repeat 4 (move 90 then rotate 90)`
+- [Draw a circle](https://dwc-six.vercel.app/?code=repeat%20360%20(move%201%20then%20rotate%201)): `repeat 360 (move 1 then rotate 1)`
+- [Draw a square](https://dwc-six.vercel.app/?code=repeat%204%20(move%2090%20then%20rotate%2090)): `repeat 4 (move 90 then rotate 90)`
