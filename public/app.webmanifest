@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+    "name": "DWC",
+    "short_name": "DWC",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "white",
+    "background_color": "white",
+    "description": "Drawing with code",
+    "icons": [
+        {
+            "src": "images/favicon.png",
+            "sizes": "512x512",
+            "purpose": "any maskable",
+            "type": "image/png"
+        }
+    ]
+}

@@ -6,13 +6,18 @@ import run from './utils/exec';
 import useWindowSize from './utils/useWindowSize';
 
 function App() {
-    const [panelWidth, panelHeight] = (useWindowSize() ?? [0, 0]).map(v => v * 7 / 10);
+
+    const [panelW, panelH] = (useWindowSize() ?? [0, 0]);
+    const panelHeight = panelH * 7 / 10;
+    const panelWidth = panelW * 7 / 10;
 
     const panel = usePanel();
     const code = React.useRef("");
 
     // Some key events
     React.useEffect(() => {
+        window.navigator.serviceWorker.register("/sw.js");
+
         // Code
         if (window.location.search)
             code.current = new URLSearchParams(window.location.search).get("code") ?? "";
@@ -37,9 +42,17 @@ function App() {
             }
         };
 
+        function update() {
+            window.location.reload();
+        }
+
+        document.addEventListener("resize", update);
         document.addEventListener("keydown", evListener, false);
 
-        return () => document.removeEventListener("keydown", evListener, false);
+        return () => {
+            document.removeEventListener("keydown", evListener, false);
+            document.removeEventListener("resize", update);
+        };
     });
 
     // Run the code

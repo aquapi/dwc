@@ -7,7 +7,9 @@ function useWindowSize() {
     const [windowSize, setWindowSize] = React.useState();
 
     React.useEffect(() => {
-        setWindowSize([window.screen.width, window.screen.height]);
+        const doc = document.documentElement;
+
+        setWindowSize([doc.clientWidth, doc.clientHeight]);
     }, []);
 
     return windowSize;
