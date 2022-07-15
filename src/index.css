@@ -21,6 +21,7 @@ canvas {
     border: 1px solid rgba(34,36,38,.15);
     border-radius: .28571429rem;
     margin-bottom: 10px;
+    max-width: 70vw;
 }
 
 body {

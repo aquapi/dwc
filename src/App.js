@@ -7,9 +7,7 @@ import useWindowSize from './utils/useWindowSize';
 
 function App() {
 
-    const [panelW, panelH] = (useWindowSize() ?? [0, 0]);
-    const panelHeight = panelH * 7 / 10;
-    const panelWidth = panelW * 7 / 10;
+    const [panelWidth, panelHeight] = (useWindowSize() ?? [0, 0]);
 
     const panel = usePanel();
     const code = React.useRef("");
@@ -46,12 +44,12 @@ function App() {
             window.location.reload();
         }
 
-        document.addEventListener("resize", update);
+        document.addEventListener("resize", update, true);
         document.addEventListener("keydown", evListener, false);
 
         return () => {
             document.removeEventListener("keydown", evListener, false);
-            document.removeEventListener("resize", update);
+            document.removeEventListener("resize", update, true);
         };
     });
 
