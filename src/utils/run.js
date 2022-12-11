@@ -1,5 +1,4 @@
 // @ts-check
-
 /**
  * @param {string} str 
  */
@@ -24,7 +23,7 @@ const splitStatement = str => {
  * Parse the code
  * @param {string} code 
  * @param {CanvasRenderingContext2D} ctx
- * @param {{ degree: number, color: string, bg: string, posX: number, posY: number, isDrawing: boolean }} state
+ * @param {{ degree: number, posX: number, posY: number, isDrawing: boolean }} state
  */
 function run(code, ctx, state) {
     // TODO: repeat 4 (move 90 then rotate 90) then move 20 -> [repeat 4 (move 90 then rotate 90), move 20] -> use parse() to run the statement inside the ()
@@ -34,24 +33,29 @@ function run(code, ctx, state) {
 /**
  * @param {string} st 
  * @param {CanvasRenderingContext2D} ctx
- * @param {{ degree: number, color: string, bg: string, posX: number, posY: number, isDrawing: boolean }} o
+ * @param {{ degree: number, posX: number, posY: number, isDrawing: boolean }} o
  */
 function runStatement(st, ctx, o) {
     // move <distance>
     if (st.startsWith("move")) {
-        const distance = Number(st.substring(5));
+        const distance = Number(st.split(" ")[1]);
 
         // Convert deg to rad
-        const convertToRadian = Math.PI / 180;
-
-        const newX = o.posX +
-            distance * Math.cos(o.degree * convertToRadian);
-        const newY = o.posY +
-            distance * Math.sin(o.degree * convertToRadian);
+        const rad = o.degree * Math.PI / 180;
+        o.posX += distance * Math.cos(rad);
+        o.posY += distance * Math.sin(rad);
 
         // Draw and set values at the same time
-        ctx[o.isDrawing ? "lineTo" : "moveTo"](o.posX = newX, o.posY = newY);
+        if (o.isDrawing) {
+            ctx.lineTo(o.posX, o.posY);
+            ctx.stroke();
+            ctx.beginPath();
+        }
+
+        ctx.moveTo(o.posX, o.posY);
     }
+    else if (st.startsWith("color"))
+        ctx.strokeStyle = st.split(" ")[1];
 
     // rotate <deg>
     else if (st.startsWith("rotate"))
@@ -88,9 +92,34 @@ function runStatement(st, ctx, o) {
             prev + " " + current
         );
 
-        for (let i = 0; i < repeatTime; i++) 
-            splitStatement(statement.substring(1, statement.length - 1)).map(stm => runStatement(stm, ctx, o));
+        for (let i = 0; i < repeatTime; i++)
+            run(statement.substring(1, statement.length - 1), ctx, o);
     }
 }
 
-export default run;
+// Run the code
+/**
+ * @param {string} code
+ * @param {HTMLCanvasElement} canvas
+ */
+export default function runCode(code, canvas) {
+    if (!canvas)
+        return;
+
+    const ctx = canvas.getContext("2d");
+    const panelWidth = canvas.width, panelHeight = canvas.height;
+
+    ctx.clearRect(0, 0, panelWidth, panelHeight);
+
+    const state = {
+        degree: 0,
+        posX: panelWidth / 2,
+        posY: panelHeight / 2,
+        isDrawing: true,
+    };
+
+    ctx.beginPath();
+    ctx.moveTo(state.posX, state.posY);
+    run(code, ctx, state);
+    ctx.strokeStyle = "black";
+}
