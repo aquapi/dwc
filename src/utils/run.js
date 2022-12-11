@@ -23,7 +23,7 @@ const splitStatement = str => {
  * Parse the code
  * @param {string} code 
  * @param {CanvasRenderingContext2D} ctx
- * @param {{ degree: number, posX: number, posY: number, isDrawing: boolean }} state
+ * @param {{ degree: number, background?: string, posX: number, posY: number, isDrawing: boolean }} state
  */
 function run(code, ctx, state) {
     // TODO: repeat 4 (move 90 then rotate 90) then move 20 -> [repeat 4 (move 90 then rotate 90), move 20] -> use parse() to run the statement inside the ()
@@ -33,7 +33,7 @@ function run(code, ctx, state) {
 /**
  * @param {string} st 
  * @param {CanvasRenderingContext2D} ctx
- * @param {{ degree: number, posX: number, posY: number, isDrawing: boolean }} o
+ * @param {{ degree: number, background?: string, posX: number, posY: number, isDrawing: boolean }} o
  */
 function runStatement(st, ctx, o) {
     // move <distance>
@@ -54,6 +54,8 @@ function runStatement(st, ctx, o) {
 
         ctx.moveTo(o.posX, o.posY);
     }
+
+    // color <color>
     else if (st.startsWith("color"))
         ctx.strokeStyle = st.split(" ")[1];
 
@@ -115,6 +117,7 @@ export default function runCode(code, canvas) {
         degree: 0,
         posX: panelWidth / 2,
         posY: panelHeight / 2,
+        background: undefined,
         isDrawing: true,
     };
 
